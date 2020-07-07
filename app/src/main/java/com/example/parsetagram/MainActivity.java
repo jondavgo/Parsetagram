@@ -1,8 +1,11 @@
 package com.example.parsetagram;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.parsetagram.databinding.ActivityMainBinding;
 import com.example.parsetagram.models.Post;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -40,10 +45,12 @@ public class MainActivity extends AppCompatActivity {
     public String photoFileName = "photo.jpg";
     public File photoFile;
 
+    final FragmentManager fragmentManager = getSupportFragmentManager();
     private Button btnCam;
     private Button btnPost;
     private TextView etDescription;
     private ImageView ivPhoto;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         btnPost = binding.btnPost;
         etDescription = binding.etDescription;
         ivPhoto = binding.ivPhoto;
+        bottomNavigationView = binding.bottomNavigation;
 
 //        queryPosts();
 
@@ -79,6 +87,27 @@ public class MainActivity extends AppCompatActivity {
                 }
                 ParseUser user = ParseUser.getCurrentUser();
                 savePost(description, user, photoFile);
+            }
+        });
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                Fragment fragment;
+                switch (item.getItemId()) {
+                    case R.id.action_home:
+                    default:
+                        Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_compose:
+                        Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_profile:
+                        Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+//                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
             }
         });
     }
