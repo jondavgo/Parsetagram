@@ -1,6 +1,8 @@
 package com.example.parsetagram;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.parsetagram.models.Post;
 import com.parse.ParseFile;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -84,6 +88,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             int pos = getAdapterPosition();
             if (pos != RecyclerView.NO_POSITION){
                 Post post = posts.get(pos);
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("post", Parcels.wrap(post));
+                context.startActivity(intent);
             }
         }
     }

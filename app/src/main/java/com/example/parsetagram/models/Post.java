@@ -5,8 +5,11 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 
+@Parcel(analyze={Post.class})
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
@@ -14,6 +17,8 @@ public class Post extends ParseObject {
     public static final String KEY_IMG = "image";
     public static final String KEY_USER = "user";
     public static final String KEY_DATE = "createdAt";
+
+    public Post(){ }
 
     public String getDescription(){
         return getString(KEY_DESC);
@@ -37,9 +42,5 @@ public class Post extends ParseObject {
 
     public void setUser(ParseUser user){
         put(KEY_USER, user);
-    }
-
-    public Date getDate(){
-        return getDate(KEY_DATE);
     }
 }
