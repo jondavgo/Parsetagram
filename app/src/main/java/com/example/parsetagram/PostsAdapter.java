@@ -44,7 +44,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         return posts.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    // Clean all elements of the recycler
+    public void clear() {
+        posts.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Post> list) {
+        posts.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView ivPic;
         TextView tvUser;
@@ -55,6 +67,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ivPic = itemView.findViewById(R.id.ivPhoto);
             tvUser = itemView.findViewById(R.id.tvUser);
             tvDesc = itemView.findViewById(R.id.tvDesc);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Post post) {
@@ -63,6 +76,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ParseFile image = post.getImage();
             if(image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivPic);
+            }
+        }
+
+        @Override
+        public void onClick(View view) {
+            int pos = getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION){
+                Post post = posts.get(pos);
             }
         }
     }
