@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.parsetagram.EndlessRecyclerViewScrollListener;
 import com.example.parsetagram.PostsAdapter;
 import com.example.parsetagram.R;
 import com.example.parsetagram.databinding.FragmentPostsBinding;
@@ -31,11 +32,13 @@ import java.util.List;
  */
 public class PostsFragment extends Fragment {
 
+    public static final int MAX_POSTS = 20;
     public static final String TAG = PostsFragment.class.getSimpleName();
     private RecyclerView rvPosts;
     protected List<Post> posts;
     protected PostsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +61,16 @@ public class PostsFragment extends Fragment {
         rvPosts.setLayoutManager(manager);
         DividerItemDecoration decoration = new DividerItemDecoration(rvPosts.getContext(), manager.getOrientation());
         rvPosts.addItemDecoration(decoration);
+        scrollListener = new EndlessRecyclerViewScrollListener(manager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                Log.i(TAG, "Loading page: " + page);
+                loadMoreData(page);
+            }
+        };
+        rvPosts.addOnScrollListener(scrollListener);
         queryPosts();
 
         // Add swipe-to-refresh
@@ -65,6 +78,24 @@ public class PostsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 refreshQuery();
+            }
+        });
+    }
+
+    protected void loadMoreData(int page) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(MAX_POSTS);
+        query.addDescendingOrder(Post.KEY_DATE);
+        query.setSkip(MAX_POSTS * page);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> objects, ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Issue with Post Query", e);
+                    return;
+                }
+                adapter.addAll(objects);
             }
         });
     }
@@ -78,7 +109,7 @@ public class PostsFragment extends Fragment {
     protected void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.setLimit(20);
+        query.setLimit(MAX_POSTS);
         query.addDescendingOrder(Post.KEY_DATE);
         query.findInBackground(new FindCallback<Post>() {
             @Override

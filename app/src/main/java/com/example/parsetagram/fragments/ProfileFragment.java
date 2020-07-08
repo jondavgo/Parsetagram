@@ -40,7 +40,7 @@ public class ProfileFragment extends PostsFragment {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
-        query.setLimit(20);
+        query.setLimit(MAX_POSTS);
         query.addDescendingOrder(Post.KEY_DATE);
         query.findInBackground(new FindCallback<Post>() {
             @Override
@@ -51,6 +51,26 @@ public class ProfileFragment extends PostsFragment {
                 }
                 posts.addAll(objects);
                 adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    protected void loadMoreData(int page) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(MAX_POSTS);
+        query.addDescendingOrder(Post.KEY_DATE);
+        query.setSkip(MAX_POSTS * page);
+        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> objects, ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Issue with Post Query", e);
+                    return;
+                }
+                adapter.addAll(objects);
             }
         });
     }

@@ -27,6 +27,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
+        android:contentDescription="@string/app_name"
         app:srcCompat="@drawable/nav_logo_whiteout" />
 
     <FrameLayout
