@@ -36,7 +36,7 @@ public class DetailActivity extends AppCompatActivity {
         tvUser.setText(post.getUser().getUsername());
         tvDesc.setText(post.getDescription());
         Date date = post.getCreatedAt();
-        String pattern = "dd/MM/yyyy";
+        String pattern = "dd/MM/yyyy 'at' hh:mm a";
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         tvDate.setText(format.format(date));
         ParseFile image = post.getImage();
