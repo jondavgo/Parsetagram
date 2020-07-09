@@ -10,6 +10,7 @@
         android:name=".ParsetagramApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
+        android:screenOrientation="portrait"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"

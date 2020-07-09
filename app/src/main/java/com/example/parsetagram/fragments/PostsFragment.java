@@ -82,7 +82,7 @@ public class PostsFragment extends Fragment {
         });
     }
 
-    protected void loadMoreData(int page) {
+    protected void loadMoreData(final int page) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.setLimit(MAX_POSTS);
@@ -92,7 +92,7 @@ public class PostsFragment extends Fragment {
             @Override
             public void done(List<Post> objects, ParseException e) {
                 if(e != null){
-                    Log.e(TAG, "Issue with Post Query", e);
+                    Log.e(TAG, "Issue with page " + page, e);
                     return;
                 }
                 adapter.addAll(objects);

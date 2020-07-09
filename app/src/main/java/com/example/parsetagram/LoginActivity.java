@@ -14,6 +14,7 @@ import com.example.parsetagram.databinding.ActivityLoginBinding;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView etUsername;
     private TextView etPassword;
     private Button login;
+    private Button signUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = binding.username;
         etPassword = binding.password;
         login = binding.login;
+        signUp = binding.signUp;
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +48,34 @@ public class LoginActivity extends AppCompatActivity {
                 logInUser(username, password);
             }
         });
+
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "Clicked sign up!");
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                signUpUser(username, password);
+            }
+        });
+    }
+
+    private void signUpUser(String username, String password) {
+        ParseUser user = new ParseUser();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Issue with sign up", e);
+                    Toast.makeText(LoginActivity.this, "Unable to sign up, please try again!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(LoginActivity.this, "Successfully created new account!", Toast.LENGTH_SHORT);
+            }
+        });
+        logInUser(username, password);
     }
 
     private void logInUser(String username, String password) {
