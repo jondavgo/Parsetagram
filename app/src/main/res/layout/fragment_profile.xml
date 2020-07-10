@@ -31,7 +31,11 @@
         <Button
             android:id="@+id/btnChangePfp"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/edit_text"
             android:text="@string/edit_profile_picture" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

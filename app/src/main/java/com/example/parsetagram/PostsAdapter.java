@@ -2,6 +2,7 @@ package com.example.parsetagram;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +18,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.parsetagram.models.Post;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
+import org.json.JSONException;
 import org.parceler.Parcels;
 
 import java.text.SimpleDateFormat;
@@ -66,11 +69,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private boolean liked;
         ImageView ivPic;
         TextView tvUser;
         TextView tvDesc;
         ImageView ivProfilePic;
         TextView tvDate;
+        ImageView ivHeart;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,10 +84,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDesc = itemView.findViewById(R.id.tvDesc);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             tvDate = itemView.findViewById(R.id.tvDate);
+            ivHeart = itemView.findViewById(R.id.ivHeart);
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Post post) {
+        public void bind(final Post post) {
             tvUser.setText(post.getUser().getUsername());
             tvDesc.setText(post.getDescription());
             ParseFile image = post.getImage();
@@ -98,6 +104,37 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             String pattern = "'Created' dd/MM/yyyy 'at' hh:mm a";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
             tvDate.setText(format.format(date));
+
+            updateLikes(post);
+
+            ivHeart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(!liked){
+                        post.addLike();
+                    } else {
+                        try {
+                            post.removeLike();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    updateLikes(post);
+                }
+            });
+        }
+
+        private void updateLikes(Post post) {
+            liked = post.getLikes().toString().contains(ParseUser.getCurrentUser().getObjectId());
+            if(liked){
+                ivHeart.setImageDrawable(context.getDrawable(R.drawable.ufi_heart_active));
+                ivHeart.setColorFilter(Color.argb(255, 255, 0,0));
+                Log.i("Detail", "Liked!");
+            } else{
+                ivHeart.setImageDrawable(context.getDrawable(R.drawable.ufi_heart));
+                ivHeart.setColorFilter(Color.argb(255, 0, 0,0));
+                Log.i("Detail", "NOT Liked!");
+            }
         }
 
         @Override

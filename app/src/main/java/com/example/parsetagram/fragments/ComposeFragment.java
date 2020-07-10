@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,8 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.json.JSONArray;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,6 +58,7 @@ public class ComposeFragment extends Fragment {
     private Button btnPost;
     private TextView etDescription;
     private ImageView ivPhoto;
+    private ProgressBar progressBar;
 
     public ComposeFragment(){
         // required empty constructor
@@ -73,6 +77,7 @@ public class ComposeFragment extends Fragment {
         btnPost = view.findViewById(R.id.btnPost);
         etDescription = view.findViewById(R.id.etDescription);
         ivPhoto = view.findViewById(R.id.ivPhoto);
+        progressBar = view.findViewById(R.id.pbLoading);
 
         btnCam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,9 +136,12 @@ public class ComposeFragment extends Fragment {
         post.setDescription(description);
         post.setImage(new ParseFile(photoFile));
         post.setUser(user);
+        post.setLikes(new JSONArray());
+        progressBar.setVisibility(ProgressBar.VISIBLE);
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
+                progressBar.setVisibility(ProgressBar.INVISIBLE);
                 if(e != null){
                     Log.e(TAG, "Error while saving", e);
                     Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
@@ -142,6 +150,7 @@ public class ComposeFragment extends Fragment {
                 Toast.makeText(getContext(), "Post saved!", Toast.LENGTH_SHORT).show();
                 etDescription.setText("");
                 ivPhoto.setImageResource(0);
+
             }
         });
     }

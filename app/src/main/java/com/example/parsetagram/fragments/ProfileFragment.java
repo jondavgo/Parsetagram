@@ -114,18 +114,18 @@ public class ProfileFragment extends PostsFragment {
         if (requestCode == ComposeFragment.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 //Bitmap takenImage = ComposeFragment.rotateBitmapOrientation(photoFile.getAbsolutePath());
-                Glide.with(getContext()).load(photoFile.getAbsolutePath()).transform(new CircleCrop()).into(ivPfp);
                 user.put(Post.KEY_PFP, new ParseFile(photoFile));
                 user.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         Log.i(TAG,"saved!");
                         refreshQuery();
+                        Glide.with(getContext()).load(user.getParseFile(Post.KEY_PFP).getUrl()).transform(new CircleCrop()).into(ivPfp);
                     }
                 });
                 Log.i("ProfileFragment", "Current pfp: " + user.getParseFile(Post.KEY_PFP));
             } else { // Result was a failure
-                Toast.makeText(getContext(), "Profile Picture cannot be changed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Profile Picture could not be changed!", Toast.LENGTH_SHORT).show();
             }
         }
     }

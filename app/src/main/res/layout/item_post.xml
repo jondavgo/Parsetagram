@@ -52,7 +52,7 @@
         <ImageView
             android:id="@+id/ivHeart"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:layout_weight="1"
             android:contentDescription="@string/heart"
             app:srcCompat="@drawable/ufi_heart" />
@@ -60,7 +60,7 @@
         <ImageView
             android:id="@+id/ivComment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:layout_weight="1"
             android:contentDescription="@string/comment"
             app:srcCompat="@drawable/ufi_comment" />
