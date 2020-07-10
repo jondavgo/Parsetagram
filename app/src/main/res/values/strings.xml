@@ -19,4 +19,5 @@
     <string name="comment">Comment</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_out">Sign Out</string>
+    <string name="edit_profile_picture">Edit Profile Picture</string>
 </resources>

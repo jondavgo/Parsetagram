@@ -103,7 +103,7 @@ public class PostsFragment extends Fragment {
         });
     }
 
-    private void refreshQuery() {
+    protected void refreshQuery() {
         adapter.clear();
         queryPosts();
         swipeContainer.setRefreshing(false);

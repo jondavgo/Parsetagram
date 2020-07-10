@@ -159,7 +159,7 @@ public class ComposeFragment extends Fragment {
         }
     }
 
-    public Bitmap rotateBitmapOrientation(String photoFilePath) {
+    public static Bitmap rotateBitmapOrientation(String photoFilePath) {
         // Create and configure BitmapFactory
         BitmapFactory.Options bounds = new BitmapFactory.Options();
         bounds.inJustDecodeBounds = true;

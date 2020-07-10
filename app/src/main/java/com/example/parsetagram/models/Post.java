@@ -49,9 +49,4 @@ public class Post extends ParseObject {
         ParseUser user = getUser();
         return user.getParseFile(KEY_PFP);
     }
-
-    public void setPfp(ParseFile file){
-        ParseUser user = getUser();
-        user.put(KEY_PFP, file);
-    }
 }
