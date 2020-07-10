@@ -73,9 +73,9 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(LoginActivity.this, "Successfully created new account!", Toast.LENGTH_SHORT);
+                gotoMain();
             }
         });
-        logInUser(username, password);
     }
 
     private void logInUser(String username, String password) {

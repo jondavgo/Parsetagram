@@ -33,10 +33,11 @@ public class DetailActivity extends AppCompatActivity {
         tvDesc = findViewById(R.id.tvDesc);
         tvDate = findViewById(R.id.tvDate);
         post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
+
         tvUser.setText(post.getUser().getUsername());
         tvDesc.setText(post.getDescription());
         Date date = post.getCreatedAt();
-        String pattern = "dd/MM/yyyy 'at' hh:mm a";
+        String pattern = "'Created' dd/MM/yyyy 'at' hh:mm a";
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         tvDate.setText(format.format(date));
         ParseFile image = post.getImage();

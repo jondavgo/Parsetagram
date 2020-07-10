@@ -23,6 +23,7 @@ import com.example.parsetagram.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ import java.util.List;
  */
 public class PostsFragment extends Fragment {
 
-    public static final int MAX_POSTS = 20;
+    public static final int MAX_POSTS = 2;
     public static final String TAG = PostsFragment.class.getSimpleName();
     private RecyclerView rvPosts;
     protected List<Post> posts;
@@ -54,6 +55,8 @@ public class PostsFragment extends Fragment {
         swipeContainer = view.findViewById(R.id.swipeContainer);
         posts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), posts);
+
+        Log.i(TAG, "logged in as: " + ParseUser.getCurrentUser().getUsername());
 
         // Set up Recycler View
         rvPosts.setAdapter(adapter);
