@@ -1,6 +1,7 @@
 package com.example.parsetagram;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.parsetagram.models.Comment;
 import com.example.parsetagram.models.Post;
 import com.parse.ParseFile;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 

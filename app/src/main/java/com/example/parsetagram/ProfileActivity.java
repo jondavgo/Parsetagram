@@ -77,6 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onRefresh() {
                 adapter.clear();
                 queryPosts();
+                swipeContainer.setRefreshing(false);
             }
         });
 
