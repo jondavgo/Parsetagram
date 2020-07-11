@@ -48,7 +48,7 @@ Here's a walkthrough of implemented user stories:
 
 <img src='https://github.com/jondavgo/Parsetagram/blob/master/Persistence.gif' title='Persistence and Home Logo' width='' alt='Persistence and Home Logo' />
 
-<img src='https://github.com/jondavgo/Parsetagram/blob/master/SignInLogin.gif' title='Sign in, Sign out, and Log in' width='' alt='Sign in, Sign out, and Log in' />
+<img src='https://github.com/jondavgo/Parsetagram/blob/master/SignInLogIn.gif' title='Sign in, Sign out, and Log in' width='' alt='Sign in, Sign out, and Log in' />
 
 <img src='https://github.com/jondavgo/Parsetagram/blob/master/Post%2C%20Comment%2C%20Like.gif' title='Post,Comment,and Likes' width='' alt='Post,Comment,and Likes' />
 
