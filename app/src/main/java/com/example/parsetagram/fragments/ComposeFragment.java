@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.example.parsetagram.MainActivity;
 import com.example.parsetagram.R;
-import com.example.parsetagram.databinding.FragmentComposeBinding;
 import com.example.parsetagram.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;

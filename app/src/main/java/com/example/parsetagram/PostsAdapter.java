@@ -129,11 +129,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             if(liked){
                 ivHeart.setImageDrawable(context.getDrawable(R.drawable.ufi_heart_active));
                 ivHeart.setColorFilter(Color.argb(255, 255, 0,0));
-                Log.i("Detail", "Liked!");
             } else{
                 ivHeart.setImageDrawable(context.getDrawable(R.drawable.ufi_heart));
                 ivHeart.setColorFilter(Color.argb(255, 0, 0,0));
-                Log.i("Detail", "NOT Liked!");
             }
         }
 

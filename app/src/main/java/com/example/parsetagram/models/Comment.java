@@ -1,6 +1,7 @@
 package com.example.parsetagram.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -9,6 +10,9 @@ public class Comment extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_POST = "post";
     public static final String KEY_TEXT = "text";
+    private static final String KEY_PFP = "profilePic";
+
+    public Comment(){ }
 
     public ParseUser getUser(){
         return getParseUser(KEY_USER);
@@ -18,19 +22,24 @@ public class Comment extends ParseObject {
         put(KEY_USER, user);
     }
 
-    public ParseUser getPost(){
-        return getParseUser(KEY_POST);
+    public Post getPost(){
+        return (Post) getParseObject(KEY_POST);
     }
 
     public void setPost(Post post){
         put(KEY_POST, post);
     }
 
-    public ParseUser getText(){
-        return getParseUser(KEY_USER);
+    public String getText(){
+        return getString(KEY_TEXT);
     }
 
     public void setText(String text){
-        put(KEY_USER, text);
+        put(KEY_TEXT, text);
+    }
+
+    public ParseFile getPfp(){
+        ParseUser user = getUser();
+        return user.getParseFile(KEY_PFP);
     }
 }

@@ -2,22 +2,16 @@ package com.example.parsetagram.models;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.parceler.Parcel;
-
-import java.util.Date;
 
 @Parcel(analyze={Post.class})
 @ParseClassName("Post")
