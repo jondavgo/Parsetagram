@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,8 +30,8 @@ import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
-    private Context context;
-    private List<Post> posts;
+    protected Context context;
+    protected List<Post> posts;
 
     public PostsAdapter(Context context, List<Post> posts) {
         this.context = context;
@@ -76,6 +77,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         ImageView ivProfilePic;
         TextView tvDate;
         ImageView ivHeart;
+        LinearLayout llUser;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +87,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             tvDate = itemView.findViewById(R.id.tvDate);
             ivHeart = itemView.findViewById(R.id.ivHeart);
+            llUser = itemView.findViewById(R.id.llUser);
             itemView.setOnClickListener(this);
         }
 
@@ -104,7 +107,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             String pattern = "'Created' dd/MM/yyyy 'at' hh:mm a";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
             tvDate.setText(format.format(date));
-
             updateLikes(post);
 
             ivHeart.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +122,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         }
                     }
                     updateLikes(post);
+                }
+            });
+            llUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION){
+                        Post post = posts.get(pos);
+                        Intent intent = new Intent(context, ProfileActivity.class);
+                        intent.putExtra("post", Parcels.wrap(post));
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,7 @@ public class DetailActivity extends AppCompatActivity {
     RecyclerView rvComment;
     ImageView ivComment;
     TextView etComment;
+    LinearLayout llUser;
 
 
     @Override
@@ -67,6 +70,7 @@ public class DetailActivity extends AppCompatActivity {
         rvComment = findViewById(R.id.rvComment);
         ivComment = findViewById(R.id.ivComment);
         etComment = findViewById(R.id.etComment);
+        llUser = findViewById(R.id.llUser);
         post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
         comments = new ArrayList<>();
         adapter = new CommentsAdapter(this, comments);
@@ -118,6 +122,15 @@ public class DetailActivity extends AppCompatActivity {
                     return;
                 }
                 postComment(ParseUser.getCurrentUser(), description);
+            }
+        });
+
+        llUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailActivity.this, ProfileActivity.class);
+                intent.putExtra("post", Parcels.wrap(post));
+                startActivity(intent);
             }
         });
     }
